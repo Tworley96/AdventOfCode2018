@@ -1,4 +1,12 @@
 import time
+from functools import lru_cache
+
+def read_lines():
+	with open("input.txt") as file:
+		return file.read().splitlines()
+lines = read_lines()
+
+@lru_cache(len(lines))
 def hammingDistance(str1, str2):
 	distance = 0
 	for i in range(0,len(str1)):
@@ -13,6 +21,7 @@ def commonLetters(str1,str2):
 		if str1[i] == str2[i]:
 			letters = letters + str1[i]
 	return letters
+
 
 def splitOnHammingDistance(ids,length):
 	if len(ids) == 0 or len(ids) == 1:
@@ -42,10 +51,8 @@ def splitOnHammingDistance(ids,length):
 			return matchingLetters
 	return ""
 
-with open("input.txt") as file:
-	start = time.time()
-	lines = file.read().splitlines()
-	length = len(lines[0])
-	letters = splitOnHammingDistance(lines, length)
-	print(letters)
-	print(time.time() - start)
+start = time.time()
+length = len(lines[0])
+letters = splitOnHammingDistance(lines, length)
+print(letters)
+print(time.time() - start)
